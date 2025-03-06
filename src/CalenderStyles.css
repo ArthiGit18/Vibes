@@ -1,0 +1,44 @@
+/* Background Image */
+.calendar-container {
+    background: url('../public/assets/banner/2.gif') no-repeat center center;
+
+    background-size: cover;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Apply Transparency and Blur */
+  .fc {
+    width: 80%; /* Adjust size */
+    max-width: 700px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.3); /* Transparent white */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Calendar Header Styling */
+  .fc-toolbar {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  /* Calendar Grid Styling */
+  .fc-daygrid-day {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  
+  /* Hover Effect */
+  .fc-daygrid-day:hover {
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  
