@@ -34,26 +34,26 @@ const Morning = () => {
       alert("Please enter your email.");
       return;
     }
-
+  
     const morningRoutine = activities.map((activity) => ({
       name: activity.name,
       completed: checked[activity.name] || false,
       notes: notes[activity.name] || "",
       time: activity.time,
     }));
-
+  
     try {
-      const response = await axios.post("http://localhost:5000/send-email", {
+      const response = await axios.post("https://vibes-backend-3vt6.onrender.com/send-email", {
         email,
         morningRoutine,
       });
-
+  
       alert(response.data.success);
     } catch (error) {
       alert("Error sending email.");
     }
   };
-
+  
   return (
     <div className="morning-routine">
       <h2 className="title">Morning Routine Tracker</h2>
