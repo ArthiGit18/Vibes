@@ -3,19 +3,10 @@ import React from "react";
 import Banner from "./Banner";
 
 const Hero = () => {
-  // const [showFlowers, setShowFlowers] = useState(true);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowFlowers(false);
-  //   }, 7000); // Show BlossomingFlowers for 2 seconds
-
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   return <div>
     <Banner />
-    {/* {showFlowers ? <BlossomingFlowers /> : <Banner />} */}
   </div>;
 };
 

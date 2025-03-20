@@ -1,16 +1,18 @@
 import React from 'react'
-import NavbarStyle from './NavbarStyle'
 import QuoteGenerator from './Quotes'
 import Morning from './Morning'
+import Notes from './Notes'
+import DateSelector from './Nav'
 
 const Banner = () => {
     return (
-       <>
-       <NavbarStyle />
-       <QuoteGenerator />
-       <Morning />
-       {/* <CalendarWithNotes /> */}
-       </>
+        <>
+        {/* <Sidebar /> */}
+            <div className='container'>
+                <DateSelector />
+                <QuoteGenerator />
+            </div>
+        </>
     )
 }
 
