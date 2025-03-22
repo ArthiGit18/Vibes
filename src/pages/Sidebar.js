@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaHome, FaLeaf, FaUtensils, FaDumbbell, FaSmile, FaCog, FaUser, FaAdjust } from "react-icons/fa";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <>
@@ -25,8 +25,8 @@ const Sidebar = () => {
           <li><Link to="/my-routine" onClick={() => setIsOpen(false)}><FaLeaf /> My Routine</Link></li>
           <li><Link to="/healthy-food" onClick={() => setIsOpen(false)}><FaUtensils /> Healthy Food</Link></li>
           <li><Link to="/exercise" onClick={() => setIsOpen(false)}><FaDumbbell /> Exercise</Link></li>
-          <li><Link to="/face-massage" onClick={() => setIsOpen(false)}><FaSmile /> Face Massage</Link></li>
-          <li><Link to="/beauty-tips" onClick={() => setIsOpen(false)}><FaLeaf /> Beauty Tips</Link></li>
+          <li><Link to="/faceandhair-massage" onClick={() => setIsOpen(false)}><FaSmile /> Face & Hair Care</Link></li>
+          <li><Link to="/beauty-tips" onClick={() => setIsOpen(false)}><FaLeaf /> Body Care Tips</Link></li>
         </ul>
 
         {/* Bottom Section */}

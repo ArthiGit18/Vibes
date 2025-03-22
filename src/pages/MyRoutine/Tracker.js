@@ -8,7 +8,7 @@ const Tracker = () => {
     // Fetch completed dates from backend
     const fetchTrackerData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/tracker-summary");
+        const response = await axios.get("http://localhost:5000/api/tracker-summary");
         setCompletedDates(response.data.completedDates || []);
       } catch (error) {
         console.error("Error fetching tracker summary:", error);
@@ -18,13 +18,18 @@ const Tracker = () => {
     fetchTrackerData();
   }, []);
 
-  // Generate last 30 days for the tracker
+  // Generate last 30 days for the tracker, ensuring correct date handling
   const getLast30Days = () => {
     const days = [];
+    const today = new Date(); // Get today's date (local time)
+
     for (let i = 29; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
+      const date = new Date(today); // Create a fresh copy of today
+      date.setDate(today.getDate() - i); // Subtract days correctly
+
+      // Fix timezone issues by normalizing to UTC
       const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD
+
       days.push({
         date: formattedDate,
         day: date.getDate(), // Extract only the day number
@@ -37,8 +42,8 @@ const Tracker = () => {
   };
 
   const days = getLast30Days();
-  const currentMonth = days[0].month;
-  const currentYear = days[0].year;
+  const currentMonth = days[days.length - 1].month; // Month of the latest date
+  const currentYear = days[days.length - 1].year; // Year of the latest date
 
   return (
     <div className="tracker-container">

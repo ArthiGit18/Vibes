@@ -23,7 +23,7 @@ const Morning = () => {
     // Check if today's routine already exists
     const checkRoutine = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/check-routine");
+        const response = await axios.get("http://localhost:5000/api/routine/check-routine");
         if (response.data.exists) {
           setIsRoutineSaved(true);
         }
@@ -76,7 +76,7 @@ const Morning = () => {
     }));
   
     try {
-      await axios.post("http://localhost:5000/save-routine", { morningRoutine });
+      await axios.post("http://localhost:5000/api/save-routine", { morningRoutine });
   
       // Update tracker UI immediately
       setIsRoutineSaved(true);
@@ -93,7 +93,7 @@ const Morning = () => {
   useEffect(() => {
     const fetchTrackerData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/tracker-summary");
+        const response = await axios.get("http://localhost:5000/api/tracker-summary");
         setCompletedDates(response.data.completedDates || []);
       } catch (error) {
         console.error("Error fetching tracker summary:", error);

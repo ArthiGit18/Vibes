@@ -12,7 +12,7 @@ const Notes = () => {
     useEffect(() => {
         const fetchRoutines = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/routines");
+                const response = await axios.get("http://localhost:5000/api/routines");
                 setRoutines(response.data);
 
                 // Filter today's routine by default
