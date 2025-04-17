@@ -3,9 +3,20 @@ import axios from "axios";
 
 const Tracker = () => {
   const [completedDates, setCompletedDates] = useState([]);
+  const [days, setDays] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
 
+  // Fetch user email from localStorage
   useEffect(() => {
-    // Fetch completed dates from backend
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setUserEmail(user.email.trim().toLowerCase());
+    }
+  }, []);
+
+  // Fetch tracker data
+  useEffect(() => {
     const fetchTrackerData = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/tracker-summary");
@@ -14,36 +25,46 @@ const Tracker = () => {
         console.error("Error fetching tracker summary:", error);
       }
     };
-
     fetchTrackerData();
   }, []);
 
-  // Generate last 30 days for the tracker, ensuring correct date handling
-  const getLast30Days = () => {
-    const days = [];
-    const today = new Date(); // Get today's date (local time)
+  // Update `days` whenever `completedDates` or `userEmail` changes
+  useEffect(() => {
+    if (userEmail) {
+      setDays(getLast30Days(completedDates, userEmail));
+    }
+  }, [completedDates, userEmail]);
+
+  // Generate last 30 days for the tracker
+  const getLast30Days = (completedDates, email) => {
+    const tempDays = [];
+    const today = new Date();
 
     for (let i = 29; i >= 0; i--) {
-      const date = new Date(today); // Create a fresh copy of today
-      date.setDate(today.getDate() - i); // Subtract days correctly
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const formattedDate = date.toISOString().split("T")[0];
 
-      // Fix timezone issues by normalizing to UTC
-      const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD
+      // Check if the current logged-in user completed routine on this date
+      const isUserCompleted = completedDates.some(
+        (entry) => entry.date === formattedDate && entry.email.trim().toLowerCase() === email
+      );
 
-      days.push({
+      tempDays.push({
         date: formattedDate,
-        day: date.getDate(), // Extract only the day number
-        month: date.toLocaleString("default", { month: "long" }), // Full month name
-        year: date.getFullYear(), // Year
-        completed: completedDates.includes(formattedDate),
+        day: date.getDate(),
+        month: date.toLocaleString("default", { month: "long" }),
+        year: date.getFullYear(),
+        completed: isUserCompleted,
       });
     }
-    return days;
+    return tempDays;
   };
 
-  const days = getLast30Days();
-  const currentMonth = days[days.length - 1].month; // Month of the latest date
-  const currentYear = days[days.length - 1].year; // Year of the latest date
+  if (days.length === 0) return <p>Loading...</p>;
+
+  const currentMonth = days[days.length - 1].month;
+  const currentYear = days[days.length - 1].year;
 
   return (
     <div className="tracker-container">
@@ -52,7 +73,7 @@ const Tracker = () => {
         {days.map((day) => (
           <div
             key={day.date}
-            className={`tracker-box ${day.completed ? "completed" : ""}`}
+            className={`tracker-box ${day.completed ? "user-completed" : ""}`}
             title={day.date}
           >
             {day.day}

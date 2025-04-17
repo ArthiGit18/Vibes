@@ -72,3 +72,87 @@
     background-color: #cc5500;
   }
   
+  .filter-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .filter-group {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+  }
+  
+  .filter-title {
+    margin: 30px 0;
+    font-weight: 600;
+    font-size: 23px;
+    text-transform: uppercase;
+    /* color: #333; */
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .filter-button {
+    padding: 8px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    color: #000;
+    transition: 0.2s ease;
+    font-size: 18px;
+  }
+  
+  .filter-button:hover {
+    background-color: green;
+    color: #fff;
+  }
+  
+  .filter-button.selected {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .zoom-image {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    border-radius: 20px;
+    transform: scale(1);
+    transition: transform 2s ease-in-out;
+  }
+  
+  .zoom-image.zoom-in {
+    transform: scale(3);
+  }
+  
+  .zoom-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .exercise-list {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .exercise-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .exercise-card h3{
+    font-size: 23px;
+  }

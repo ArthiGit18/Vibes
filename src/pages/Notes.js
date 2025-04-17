@@ -3,41 +3,36 @@ import axios from "axios";
 
 const Notes = () => {
     const [routines, setRoutines] = useState([]);
-    const [filteredRoutines, setFilteredRoutines] = useState([]);
-    const [selectedDate, setSelectedDate] = useState("");
-    const [todayRoutineExists, setTodayRoutineExists] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]); // Default to today's date
 
-    const todayDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    // Get logged-in user's email from localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userEmail = user?.email || "";
 
     useEffect(() => {
+        if (!userEmail || !selectedDate) return;
+    
+        console.log("Fetching routines for:", userEmail, selectedDate); // Debugging
+    
         const fetchRoutines = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/routines");
+                const response = await axios.get("http://localhost:5000/api/routines", {
+                    params: { email: userEmail, date: selectedDate },
+                });
+    
+                console.log("Response data:", response.data); // Check what data is returned
                 setRoutines(response.data);
-
-                // Filter today's routine by default
-                const todayRoutine = response.data.filter(routine => routine.date === todayDate);
-                setFilteredRoutines(todayRoutine);
-                setTodayRoutineExists(todayRoutine.length > 0);
             } catch (error) {
                 console.error("❌ Error fetching routines:", error);
             }
         };
-
+    
         fetchRoutines();
-    }, []);
+    }, [userEmail, selectedDate]);
 
-    // Function to filter by date
+    // Function to change date and fetch data
     const handleDateChange = (e) => {
-        const date = e.target.value;
-        setSelectedDate(date);
-
-        if (date) {
-            const filtered = routines.filter(routine => routine.date === date);
-            setFilteredRoutines(filtered);
-        } else {
-            setFilteredRoutines(routines);
-        }
+        setSelectedDate(e.target.value);
     };
 
     return (
@@ -48,23 +43,15 @@ const Notes = () => {
                 {/* Date Filter */}
                 <div className="filter-container">
                     <label>Select Date: </label>
-                    <input 
-                        type="date" 
-                        value={selectedDate} 
-                        onChange={handleDateChange} 
-                    />
+                    <input type="date" value={selectedDate} onChange={handleDateChange} />
                 </div>
 
                 <div className="routines-container">
-                    {filteredRoutines.length === 0 ? (
-                        <p className="no-data-message">
-                            {selectedDate ? "No routines found for this date." : 
-                            "Make sure to enter today's routine!"}
-                        </p>
+                    {routines.length === 0 ? (
+                        <p className="no-data-message">No routines found for this date.</p>
                     ) : (
-                        filteredRoutines.map((routine) => (
-                            <div className="routine-item" key={routine.id}>
-                               
+                        routines.map((routine) => (
+                            <div className="routine-item" key={routine._id}>
                                 <span className="bold-text">Date:</span> {routine.date}
                                 <span className="bold-text">Morning Routine:</span>
                                 <ul className="notes_list">

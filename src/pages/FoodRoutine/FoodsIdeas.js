@@ -1,50 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Foods.css";
-
-const foodSections = [
-    {
-        title: "Morning Breakfast Ideas",
-        items: [
-            { image: "/assets/Foods/1.jpg", title: "Oats & Berries", content: "A nutritious mix of oats, nuts, and fresh berries to start your day." },
-            { image: "/assets/Foods/1.jpg", title: "Avocado Toast", content: "Whole grain toast with mashed avocado, lemon, and chili flakes." },
-            { image: "/assets/Foods/1.jpg", title: "Smoothie Bowl", content: "A mix of banana, berries, yogurt, and chia seeds for energy." },
-            { image: "/assets/Foods/1.jpg", title: "Egg & Spinach Wrap", content: "A protein-rich wrap with eggs, spinach, and cheese." },
-            { image: "/assets/Foods/1.jpg", title: "Greek Yogurt & Nuts", content: "A refreshing bowl of Greek yogurt with honey and almonds." },
-        ],
-    },
-    {
-        title: "Lunch Ideas",
-        items: [
-            { image: "/assets/Foods/1.jpg", title: "Quinoa Salad", content: "A healthy salad with quinoa, veggies, and a lemon dressing." },
-            { image: "/assets/Foods/1.jpg", title: "Grilled Chicken Bowl", content: "Lean grilled chicken with brown rice and steamed veggies." },
-            { image: "/assets/Foods/1.jpg", title: "Lentil Soup", content: "A hearty bowl of lentil soup packed with protein and fiber." },
-            { image: "/assets/Foods/1.jpg", title: "Veggie Stir-fry", content: "A mix of fresh vegetables stir-fried with garlic and tofu." },
-            { image: "/assets/Foods/1.jpg", title: "Hummus & Whole Wheat Pita", content: "A tasty meal with hummus, pita, and fresh salad." },
-        ],
-    },
-    {
-        title: "Dinner Ideas",
-        items: [
-            { image: "/assets/Foods/1.jpg", title: "Grilled Salmon", content: "Salmon with a side of roasted vegetables and quinoa." },
-            { image: "/assets/Foods/1.jpg", title: "Stuffed Bell Peppers", content: "Bell peppers stuffed with quinoa, beans, and cheese." },
-            { image: "/assets/Foods/1.jpg", title: "Spinach & Chickpea Curry", content: "A flavorful curry with chickpeas, spinach, and spices." },
-            { image: "/assets/Foods/1.jpg", title: "Zucchini Noodles", content: "Zucchini noodles with homemade pesto and cherry tomatoes." },
-            { image: "/assets/Foods/1.jpg", title: "Brown Rice & Stir-fry", content: "Healthy brown rice with tofu and mixed vegetables." },
-        ],
-    },
-    {
-        title: "Juices for Healthy Skin & Hair",
-        items: [
-            { image: "/assets/Foods/1.jpg", title: "Carrot & Beet Juice", content: "A refreshing juice rich in antioxidants for glowing skin." },
-            { image: "/assets/Foods/1.jpg", title: "Green Detox Juice", content: "Spinach, cucumber, and lemon juice for body detox." },
-            { image: "/assets/Foods/1.jpg", title: "Coconut & Aloe Vera", content: "A hydrating blend that nourishes hair and skin." },
-            { image: "/assets/Foods/1.jpg", title: "Berry Blast", content: "A mix of blueberries, strawberries, and chia seeds." },
-            { image: "/assets/Foods/1.jpg", title: "Turmeric & Ginger", content: "A powerful anti-inflammatory juice for radiant skin." },
-        ],
-    },
-];
+import he from 'he';
 
 const HealthyFood = () => {
+    const [foodSections, setFoodSections] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/food/list") // Adjust URL based on your backend
+            .then(response => {
+                const data = response.data;
+
+                const categories = [
+                    { title: "Morning Breakfast Ideas", mldj: 1 },
+                    { title: "Lunch Ideas", mldj: 2 },
+                    { title: "Dinner Ideas", mldj: 3 },
+                    { title: "Juices for Healthy Skin & Hair", mldj: 7 }
+                ];
+
+                const groupedFood = categories.map(category => {
+                    const filteredItems = data.filter(item => item.mldj === category.mldj);
+                    return {
+                        title: category.title,
+                        items: filteredItems.slice(0, 5), // Show only 5 initially
+                        hasMore: filteredItems.length > 5, // Check if there are more than 5
+                    };
+                });
+
+                setFoodSections(groupedFood);
+            })
+            .catch(error => console.error("Error fetching food list:", error));
+    }, []);
+
+    const handleNavigate = (id) => {
+        navigate(`/healthy-food-Recipe-details/${id}`);
+    };
+    const decodeHtml = (html) => {
+        return he.decode(html); // Decodes HTML entities like &lt;, &gt;, &amp;, etc.
+    };
+
     return (
         <div className="container">
             <div className="healthy-food-container">
@@ -53,16 +49,30 @@ const HealthyFood = () => {
                     <div key={index} className="food-section">
                         <h3 className="section-title">{section.title}</h3>
                         <div className="food-grid">
-                            {section.items.map((item, idx) => (
-                                <div key={idx} className="food-box">
-                                    <img src={item.image} alt={item.title} className="food-image" />
-                                    <h4 className="food-title">{item.title}</h4>
-                                    <p className="food-content">{item.content}</p>
+                            {section.items.map((item) => (
+                                <div key={item._id} className="food-box" onClick={() => handleNavigate(item._id)}>
+                                    <img src={`http://localhost:5000${item.image}`} alt={item.name} className="food-image" />
+                                    <h4 className="food-title">{item.name}</h4>
+                                    <div
+                                        className="food-content-ideas"
+                                        dangerouslySetInnerHTML={{
+                                            __html: decodeHtml(item.description.slice(0, 60)) + "...",
+                                        }}
+                                    />
                                 </div>
                             ))}
-                            <div className="food-box view-more">
-                                <button className="view-more-btn">View More</button>
-                            </div>
+                            {section.hasMore && (
+                                <div className="food-box view-more">
+                                    <button
+                                        className="view-more-btn"
+                                        onClick={() => navigate("/healthy-food-recipe-list", {
+                                            state: { category: section.title, mldj: section.mldj } // optional: pass state if needed
+                                        })}
+                                    >
+                                        View More
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
