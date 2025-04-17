@@ -93,6 +93,12 @@ const Sidebar = () => {
         transition={{ duration: 0.3 }}
       >
         <ul className="menu">
+
+          <li>
+            <Link to="/" className="link">
+              <img src="../../assets/logo/2.png" alt="Logo" className="logo" />
+            </Link>
+          </li>
           <li><Link to="/" className="link"><FaHome /> Home</Link></li>
           <li><Link to="/my-routine" className="link"><FaLeaf /> My Routine</Link></li>
           <li><Link to="/healthy-food" className="link"><FaUtensils /> Healthy Food</Link></li>
