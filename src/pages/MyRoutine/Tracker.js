@@ -19,7 +19,7 @@ const Tracker = () => {
   useEffect(() => {
     const fetchTrackerData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/tracker-summary");
+        const response = await axios.get("https://sweet-appreciation-production.up.railway.app/api/tracker-summary");
         setCompletedDates(response.data.completedDates || []);
       } catch (error) {
         console.error("Error fetching tracker summary:", error);

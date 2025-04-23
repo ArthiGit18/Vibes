@@ -9,7 +9,8 @@ const HealthyFood = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/food/list") // Adjust URL based on your backend
+        axios.get("https://sweet-appreciation-production.up.railway.app/api/food/list") 
+        // axios.get("http://localhost:5000/api/food/list") 
             .then(response => {
                 const data = response.data;
 

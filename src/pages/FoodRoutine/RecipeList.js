@@ -15,7 +15,7 @@ const RecipeList = () => {
 
     const fetchRecipes = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/food/list");
+            const response = await axios.get("https://sweet-appreciation-production.up.railway.app/api/food/list");
             let filtered = response.data;
 
             if (mldjFilter !== "") {
@@ -37,7 +37,7 @@ const RecipeList = () => {
     }, [mldjFilter, vegNonvegFilter]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/food/list")
+        axios.get("https://sweet-appreciation-production.up.railway.app/api/food/list")
             .then(response => {
                 setRecipes(response.data);
                 response.data.forEach(item => {

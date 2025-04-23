@@ -16,7 +16,7 @@ const Notes = () => {
     
         const fetchRoutines = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/routines", {
+                const response = await axios.get("https://sweet-appreciation-production.up.railway.app/api/routines", {
                     params: { email: userEmail, date: selectedDate },
                 });
     

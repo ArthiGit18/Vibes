@@ -9,10 +9,6 @@ import Exercisemain from "./pages/Exercise/Exercisemain";
 import Bodycaremain from "./pages/Bodycare/Bodycaremain";
 import Login from "./pages/Login/LoginMain";
 import EmailTest from "./pages/Login/LoginTest";
-import MorningDish from "./pages/FoodRoutine/MorningDish";
-import LunchDish from "./pages/FoodRoutine/LunchDish";
-import DinnerDish from "./pages/FoodRoutine/DinnerDish";
-import JuiceSection from "./pages/FoodRoutine/JuiceSection";
 import FoodDetails from "./pages/FoodRoutine/FoodDetails";
 import RecipeList from "./pages/FoodRoutine/RecipeList";
 import ExercisePage from "./pages/Exercise/Exercise";
@@ -36,10 +32,6 @@ function App() {
 
             {/* Food Recipe Section - Morning,  */}
             <Route path="/healthy-food" element={<Foodmain />} />
-            <Route path="/healthy-food-Morn" element={<MorningDish />} />
-            <Route path="/healthy-food-lunch" element={<LunchDish />} />
-            <Route path="/healthy-food-dinner" element={<DinnerDish />} />
-            <Route path="/healthy-food-juice" element={<JuiceSection />} />
             <Route path="/healthy-food-recipe-list" element={<RecipeList />} />
             <Route path="/healthy-food-Recipe-details/:id" element={<FoodDetails />} />
 

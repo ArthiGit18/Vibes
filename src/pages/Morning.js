@@ -29,7 +29,7 @@ const Morning = () => {
 
   const checkUserRoutine = async (email) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/routine/check-routine?email=${email}`);
+      const response = await axios.get(`https://sweet-appreciation-production.up.railway.app/api/routine/check-routine?email=${email}`);
       if (response.data) {
         setIsRoutineSaved(true);
       }
@@ -54,7 +54,7 @@ const Morning = () => {
       time: activity.time,
     }));
     try {
-      await axios.post("http://localhost:5000/api/save-routine", { email: userEmail, morningRoutine });
+      await axios.post("https://sweet-appreciation-production.up.railway.app/api/save-routine", { email: userEmail, morningRoutine });
       setIsRoutineSaved(true);
       setPopupMessage("Routine saved successfully!");
     } catch (error) {

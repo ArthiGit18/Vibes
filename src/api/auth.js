@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth"; // Update with your backend URL
+const API_URL = "https://sweet-appreciation-production.up.railway.app/api/auth";
+// const API_URL = "http://localhost:5000/api/auth";
 
 // Signup API
 export const signup = async (userData) => {

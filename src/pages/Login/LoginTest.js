@@ -7,7 +7,7 @@ const EmailTest = () => {
 
   const sendEmail = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/send-email", {
+      const response = await axios.post("https://sweet-appreciation-production.up.railway.app/api/send-email", {
         email,
       });
       setMessage(response.data.message);

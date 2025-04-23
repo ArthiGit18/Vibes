@@ -9,7 +9,7 @@ const Signup = ({ setView }) => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", {
+      const response = await axios.post("https://sweet-appreciation-production.up.railway.app/api/auth/signup", {
         fullName,
         email,
         password,

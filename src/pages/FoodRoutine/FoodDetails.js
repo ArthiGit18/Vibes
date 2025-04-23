@@ -14,7 +14,8 @@ const FoodDetailsPage = () => {
     // Fetch food data using the foodId from the URL
     const fetchFoodData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/food/details/${id}`);
+        const response = await axios.get(`https://sweet-appreciation-production.up.railway.app/api/food/details/${id}`);
+        // const response = await axios.get(`http://localhost:5000/api/food/details/${id}`);
         setFoodData(response.data);
       } catch (error) {
         console.error("Error fetching food details:", error);
@@ -47,7 +48,7 @@ const FoodDetailsPage = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
             <img
-              src={`http://localhost:5000${foodData.image}`}
+              src={`https://sweet-appreciation-production.up.railway.app${foodData.image}`}
               alt={foodData.name}
               style={{ width: "100%", height: "auto", borderRadius: "8px" }}
             />

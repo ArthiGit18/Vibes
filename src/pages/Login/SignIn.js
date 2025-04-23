@@ -10,7 +10,7 @@ const Signin = ({ setView }) => {
   const handleSignin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signin", {
+      const response = await axios.post("https://sweet-appreciation-production.up.railway.app/api/auth/signin", {
         email,
         password,
       });
