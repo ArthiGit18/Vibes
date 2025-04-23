@@ -13,17 +13,17 @@ const FoodDetailsPage = () => {
   useEffect(() => {
     // Fetch food data using the foodId from the URL
     const fetchFoodData = async () => {
-      try {
-        const response = await axios.get(`https://sweet-appreciation-production.up.railway.app/api/food/details/${id}`);
-        // const response = await axios.get(`http://localhost:5000/api/food/details/${id}`);
-        setFoodData(response.data);
-      } catch (error) {
-        console.error("Error fetching food details:", error);
-      }
+        try {
+            const response = await axios.get(`https://sweet-appreciation-production.up.railway.app/api/food/details/${id}`);
+            // const response = await axios.get(`http://localhost:5000/api/food/details/${id}`);
+            setFoodData(response.data);
+        } catch (error) {
+            console.error("Error fetching food details:", error);
+        }
     };
 
     fetchFoodData();
-  }, [foodId]);
+}, [id, foodId]);
 
   const handleGoBack = () => {
     navigate("/healthy-food"); // Go back to the previous page

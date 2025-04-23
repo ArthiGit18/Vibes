@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import he from "he";
 import { Autocomplete, TextField, Switch, FormControlLabel } from "@mui/material";
 import { useRef } from "react";
 import "./Foods.css"; // Reuse the same styling used for HealthyFood
@@ -13,26 +12,26 @@ const RecipeList = () => {
     const recipeRefs = useRef({});
     const [highlightedId, setHighlightedId] = useState(null);
 
-    const fetchRecipes = async () => {
-        try {
-            const response = await axios.get("https://sweet-appreciation-production.up.railway.app/api/food/list");
-            let filtered = response.data;
-
-            if (mldjFilter !== "") {
-                filtered = filtered.filter((item) => item.mldj === Number(mldjFilter));
-            }
-
-            if (vegNonvegFilter === 1 || vegNonvegFilter === 2) {
-                filtered = filtered.filter(item => item.vegNonveg === vegNonvegFilter);
-            }
-
-            setRecipes(filtered);
-        } catch (error) {
-            console.error("Error fetching recipes:", error);
-        }
-    };
-
     useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await axios.get("https://sweet-appreciation-production.up.railway.app/api/food/list");
+                let filtered = response.data;
+    
+                if (mldjFilter !== "") {
+                    filtered = filtered.filter((item) => item.mldj === Number(mldjFilter));
+                }
+    
+                if (vegNonvegFilter === 1 || vegNonvegFilter === 2) {
+                    filtered = filtered.filter(item => item.vegNonveg === vegNonvegFilter);
+                }
+    
+                setRecipes(filtered);
+            } catch (error) {
+                console.error("Error fetching recipes:", error);
+            }
+        };
+    
         fetchRecipes();
     }, [mldjFilter, vegNonvegFilter]);
 
@@ -60,7 +59,6 @@ const RecipeList = () => {
         }
     };
 
-    const decodeHtml = (html) => he.decode(html);
 
     return (
         <div className="container">

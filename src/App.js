@@ -8,7 +8,6 @@ import Facecaremain from "./pages/FaceCare/Facecaremain";
 import Exercisemain from "./pages/Exercise/Exercisemain";
 import Bodycaremain from "./pages/Bodycare/Bodycaremain";
 import Login from "./pages/Login/LoginMain";
-import EmailTest from "./pages/Login/LoginTest";
 import FoodDetails from "./pages/FoodRoutine/FoodDetails";
 import RecipeList from "./pages/FoodRoutine/RecipeList";
 import ExercisePage from "./pages/Exercise/Exercise";
